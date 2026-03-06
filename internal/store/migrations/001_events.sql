@@ -68,8 +68,11 @@ CREATE INDEX IF NOT EXISTS idx_events_dst_ip     ON events (dst_ip, time DESC);
 CREATE INDEX IF NOT EXISTS idx_events_user_name  ON events (user_name, time DESC);
 CREATE INDEX IF NOT EXISTS idx_events_process    ON events (process_name, time DESC);
 
--- Compression policy: compress chunks older than 7 days
-SELECT add_compression_policy('events', INTERVAL '7 days', if_not_exists => TRUE);
-
 -- Retention policy: drop chunks older than 90 days (adjust as needed)
 SELECT add_retention_policy('events', INTERVAL '90 days', if_not_exists => TRUE);
+
+-- NOTE: Compression policy (add_compression_policy) requires the TimescaleDB
+-- Community/Enterprise license and is not available in the free Apache edition.
+-- If you upgrade to a licensed version, you can enable it with:
+--   SELECT add_compression_policy('events', INTERVAL '7 days', if_not_exists => TRUE);
+
