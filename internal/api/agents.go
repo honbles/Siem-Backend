@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"opensiem/backend/internal/store"
+	"obsidianwatch/backend/internal/store"
 )
 
 type agentStore interface {

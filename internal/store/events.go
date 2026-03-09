@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"opensiem/backend/pkg/schema"
+	"obsidianwatch/backend/pkg/schema"
 )
 
 // InsertEvents writes a batch of events to the hypertable using a single

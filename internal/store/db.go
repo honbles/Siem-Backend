@@ -9,7 +9,7 @@ import (
 
 	_ "github.com/lib/pq" // PostgreSQL / TimescaleDB driver
 
-	"opensiem/backend/internal/config"
+	"obsidianwatch/backend/internal/config"
 )
 
 // DB wraps the standard sql.DB with helpers for the SIEM store.

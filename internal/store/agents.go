@@ -20,18 +20,19 @@ type Agent struct {
 
 // UpsertAgent inserts or updates agent metadata on each batch received.
 // last_ip comes from the HTTP request RemoteAddr.
-func (db *DB) UpsertAgent(ctx context.Context, id, hostname, os, version, remoteIP string, eventCount int) error {
+func (db *DB) UpsertAgent(ctx context.Context, id, hostname, os, version, remoteIP, installKey string, eventCount int) error {
 	_, err := db.ExecContext(ctx, `
-		INSERT INTO agents (id, hostname, os, version, first_seen, last_seen, last_ip, event_count)
-		VALUES ($1, $2, $3, $4, NOW(), NOW(), $5, $6)
+		INSERT INTO agents (id, hostname, os, version, first_seen, last_seen, last_ip, event_count, install_key)
+		VALUES ($1, $2, $3, $4, NOW(), NOW(), $5, $6, NULLIF($7, ''))
 		ON CONFLICT (id) DO UPDATE SET
 			hostname    = EXCLUDED.hostname,
 			os          = EXCLUDED.os,
 			version     = EXCLUDED.version,
 			last_seen   = NOW(),
 			last_ip     = EXCLUDED.last_ip,
-			event_count = agents.event_count + EXCLUDED.event_count
-	`, id, hostname, os, version, remoteIP, eventCount)
+			event_count = agents.event_count + EXCLUDED.event_count,
+			install_key = COALESCE(NULLIF(EXCLUDED.install_key, ''), agents.install_key)
+	`, id, hostname, os, version, remoteIP, eventCount, installKey)
 	if err != nil {
 		return fmt.Errorf("store: upsert agent: %w", err)
 	}

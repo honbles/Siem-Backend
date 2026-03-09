@@ -3,28 +3,28 @@ services:
   # ── TimescaleDB ───────────────────────────────────────────────────────────
   timescaledb:
     image: timescale/timescaledb:latest-pg16
-    container_name: opensiem-db
+    container_name: obsidianwatch-db
     restart: unless-stopped
     environment:
-      POSTGRES_DB:       opensiem
-      POSTGRES_USER:     opensiem
+      POSTGRES_DB:       obsidianwatch
+      POSTGRES_USER:     obsidianwatch
       POSTGRES_PASSWORD: changeme        # ← CHANGE THIS (match server.yaml)
     volumes:
       - timescale_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"                      # expose for local psql access
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U opensiem -d opensiem"]
+      test: ["CMD-SHELL", "pg_isready -U obsidianwatch -d obsidianwatch"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  # ── OpenSIEM Backend ──────────────────────────────────────────────────────
+  # ── ObsidianWatch Backend ──────────────────────────────────────────────────────
   backend:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    container_name: opensiem-backend
+    container_name: obsidianwatch-backend
     restart: unless-stopped
     depends_on:
       timescaledb:

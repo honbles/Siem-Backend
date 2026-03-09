@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"time"
 
-	"opensiem/backend/internal/store"
-	"opensiem/backend/pkg/schema"
+	"obsidianwatch/backend/internal/store"
+	"obsidianwatch/backend/pkg/schema"
 )
 
 type queryStore interface {

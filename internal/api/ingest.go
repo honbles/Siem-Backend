@@ -8,13 +8,13 @@ import (
 	"strings"
 	"time"
 
-	"opensiem/backend/pkg/schema"
-	"opensiem/backend/internal/store"
+	"obsidianwatch/backend/pkg/schema"
+	"obsidianwatch/backend/internal/store"
 )
 
 type ingestStore interface {
 	InsertEvents(ctx context.Context, events []schema.Event) error
-	UpsertAgent(ctx context.Context, id, hostname, os, version, remoteIP string, eventCount int) error
+	UpsertAgent(ctx context.Context, id, hostname, os, version, remoteIP, installKey string, eventCount int) error
 }
 
 func handleIngest(db ingestStore, maxBatch int, logger *slog.Logger) http.HandlerFunc {
@@ -73,7 +73,7 @@ func handleIngest(db ingestStore, maxBatch int, logger *slog.Logger) http.Handle
 			os = batch.Events[0].OS
 		}
 		if err := db.UpsertAgent(r.Context(),
-			batch.AgentID, hostname, os, batch.AgentVer, remoteIP, len(batch.Events),
+			batch.AgentID, hostname, os, batch.AgentVer, remoteIP, batch.InstallKey, len(batch.Events),
 		); err != nil {
 			// Non-fatal — log and continue
 			logger.Warn("ingest: upsert agent failed", "agent", batch.AgentID, "err", err)

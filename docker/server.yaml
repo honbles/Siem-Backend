@@ -13,8 +13,8 @@ server:
 database:
   host:     "timescaledb"   # Docker service name — do not change when using compose
   port:     5432
-  name:     "opensiem"
-  user:     "opensiem"
+  name:     "obsidianwatch"
+  user:     "obsidianwatch"
   password: "changeme"      # ← MUST MATCH POSTGRES_PASSWORD in docker-compose.yml
   ssl_mode: "disable"
   max_open_conns:    25

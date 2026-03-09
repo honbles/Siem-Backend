@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"time"
 
-	"opensiem/backend/internal/auth"
-	"opensiem/backend/internal/config"
-	"opensiem/backend/internal/store"
+	"obsidianwatch/backend/internal/auth"
+	"obsidianwatch/backend/internal/config"
+	"obsidianwatch/backend/internal/store"
 )
 
 // Server is the HTTP API server.

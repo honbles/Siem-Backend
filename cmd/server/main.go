@@ -11,10 +11,10 @@ import (
 	"syscall"
 	"time"
 
-	"opensiem/backend/internal/api"
-	"opensiem/backend/internal/config"
-	"opensiem/backend/internal/store"
-	"opensiem/backend/internal/store/migrations"
+	"obsidianwatch/backend/internal/api"
+	"obsidianwatch/backend/internal/config"
+	"obsidianwatch/backend/internal/store"
+	"obsidianwatch/backend/internal/store/migrations"
 )
 
 func main() {
